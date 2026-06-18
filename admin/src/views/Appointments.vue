@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import request from '../api/request';
 
 const items = ref([]);
@@ -39,6 +39,20 @@ async function changeStatus(row, status) {
   ElMessage.success('状态已更新');
   load();
 }
+
+// 取消预约：先弹确认框，管理员确认后再取消
+async function cancelAppointment(row) {
+  try {
+    await ElMessageBox.confirm(
+      `确认取消订单「${row.order_no}」吗？\n顾客 ${row.user_phone} · ${row.appointment_date} ${row.appointment_time}`,
+      '取消预约',
+      { type: 'warning', confirmButtonText: '确认取消', cancelButtonText: '再想想' }
+    );
+  } catch {
+    return; // 用户点了“再想想”或关闭对话框
+  }
+  await changeStatus(row, 'cancelled');
+}
 </script>
 
 <template>
@@ -76,7 +90,7 @@ async function changeStatus(row, status) {
         <template #default="{ row }">
           <el-button v-if="row.status === 'pending'" link type="primary" @click="changeStatus(row, 'confirmed')">确认</el-button>
           <el-button v-if="row.status === 'confirmed'" link type="primary" @click="changeStatus(row, 'completed')">完成</el-button>
-          <el-button v-if="['pending','confirmed'].includes(row.status)" link type="danger" @click="changeStatus(row, 'cancelled')">取消</el-button>
+          <el-button v-if="['pending','confirmed'].includes(row.status)" link type="danger" @click="cancelAppointment(row)">取消</el-button>
         </template>
       </el-table-column>
     </el-table>

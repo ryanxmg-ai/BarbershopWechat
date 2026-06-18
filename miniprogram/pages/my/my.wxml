@@ -1,1 +1,27 @@
-<view>我的预约</view>
+<view class="tabs">
+  <view class="tab {{activeTab === item.key ? 'tab-active' : ''}}" wx:for="{{tabs}}" wx:key="key"
+        data-key="{{item.key}}" bindtap="switchTab">{{item.label}}</view>
+</view>
+
+<view wx:if="{{!phone}}" class="empty">请先在预约流程中登录</view>
+
+<view class="list">
+  <view class="appt card" wx:for="{{list}}" wx:key="id">
+    <view class="appt-top">
+      <text class="dt">{{item.appointment_date}} {{item.appointment_time}}</text>
+      <text class="muted">{{item.store.name}}</text>
+    </view>
+    <view class="appt-mid">
+      <image class="avatar" src="{{item.barber.avatar_url || '/images/placeholder-avatar.png'}}" mode="aspectFill" />
+      <view>
+        <view class="b-name">{{item.barber.name}}（{{item.barber.title}}）</view>
+        <view class="muted">{{item.service.name}}　¥{{item.amount}}</view>
+      </view>
+    </view>
+    <view class="appt-actions">
+      <view wx:if="{{activeTab === 'upcoming'}}" class="btn-outline" data-id="{{item.id}}" bindtap="cancel">取消预约</view>
+      <view wx:if="{{activeTab !== 'upcoming'}}" class="btn-outline" data-item="{{item}}" bindtap="rebook">再来一单</view>
+    </view>
+  </view>
+  <view wx:if="{{phone && list.length === 0}}" class="empty">暂无预约</view>
+</view>

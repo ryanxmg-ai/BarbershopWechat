@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/stores/stores",
+    "pages/store-detail/store-detail",
+    "pages/barber/barber",
+    "pages/confirm/confirm",
+    "pages/my/my"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1f3026",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Ryan 男士理发馆",
+    "backgroundColor": "#f4f5f3"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#c9a96a",
+    "backgroundColor": "#ffffff",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/stores/stores", "text": "门店" },
+      { "pagePath": "pages/my/my", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

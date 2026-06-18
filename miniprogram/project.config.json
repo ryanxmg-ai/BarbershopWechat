@@ -1,0 +1,7 @@
+{
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "libVersion": "latest",
+  "projectname": "ryan-barber",
+  "setting": { "urlCheck": false, "es6": true, "postcss": true, "minified": true }
+}

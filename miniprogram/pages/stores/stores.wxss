@@ -1,0 +1,10 @@
+.searchbar { display: flex; align-items: center; gap: 16rpx; padding: 20rpx 24rpx; background: #fff; }
+.city { color: #1f3026; font-weight: 600; }
+.search-input { flex: 1; background: #f1f2f0; border-radius: 999rpx; padding: 14rpx 24rpx; font-size: 26rpx; }
+.list { padding: 20rpx 24rpx; display: flex; flex-direction: column; gap: 20rpx; }
+.store-row { display: flex; padding: 20rpx; gap: 20rpx; }
+.thumb { width: 160rpx; height: 160rpx; border-radius: 12rpx; flex-shrink: 0; }
+.row-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.row-top { display: flex; align-items: center; gap: 12rpx; }
+.store-name { font-size: 30rpx; font-weight: 600; color: #1f3026; }
+.row-bottom { display: flex; gap: 16rpx; align-items: center; }

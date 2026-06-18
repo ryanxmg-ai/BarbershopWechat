@@ -1,1 +1,21 @@
-<view>门店列表</view>
+<view class="searchbar">
+  <text class="city">上海 ▾</text>
+  <input class="search-input" placeholder="搜索门店名称或商圈" value="{{keyword}}" bindinput="onInput" bindconfirm="onSearch" />
+</view>
+
+<view class="list">
+  <view class="store-row card" wx:for="{{stores}}" wx:key="id" data-id="{{item.id}}" bindtap="goStore">
+    <image class="thumb" src="{{item.images[0] || '/images/placeholder-store.png'}}" mode="aspectFill" />
+    <view class="row-info">
+      <view class="row-top">
+        <text class="store-name">{{item.name}}</text>
+        <text class="{{item.status === 'open' ? 'tag-open' : 'tag-closed'}}">{{item.status === 'open' ? '营业中' : '休息中'}}</text>
+      </view>
+      <view class="muted">{{item.address}}</view>
+      <view class="row-bottom">
+        <text class="rate">★ {{item.rating}}</text>
+        <text class="muted">{{item.review_count}}条评价</text>
+      </view>
+    </view>
+  </view>
+</view>

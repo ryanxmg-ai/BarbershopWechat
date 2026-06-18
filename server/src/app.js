@@ -15,7 +15,7 @@ function createApp() {
   app.use('/api/stores', require('./routes/stores'));
   app.use('/api/barbers', require('./routes/barbers'));
   app.use('/api/services', require('./routes/services'));
-  // app.use('/api/appointments', require('./routes/appointments'));
+  app.use('/api/appointments', require('./routes/appointments'));
   // app.use('/api/admin/dashboard', require('./routes/dashboard'));
   // app.use('/api/upload', require('./routes/upload'));
 

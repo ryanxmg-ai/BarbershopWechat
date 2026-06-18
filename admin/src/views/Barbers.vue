@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { ElMessage } from 'element-plus';
+import { ElMessage, ElMessageBox } from 'element-plus';
 import request from '../api/request';
 
 const all = ref([]);
@@ -47,7 +47,21 @@ async function save() {
   load();
 }
 async function toggleStatus(b) {
-  await request.put(`/barbers/${b.id}`, { status: b.status === 'active' ? 'resting' : 'active' });
+  const disabling = b.status === 'active';
+  // 停用会影响该理发师排班，先确认；启用无害，直接执行
+  if (disabling) {
+    try {
+      await ElMessageBox.confirm(
+        `确认停用理发师「${b.name}」吗？停用后顾客将无法预约 TA。`,
+        '停用理发师',
+        { type: 'warning', confirmButtonText: '确认停用', cancelButtonText: '再想想' }
+      );
+    } catch {
+      return; // 用户取消
+    }
+  }
+  await request.put(`/barbers/${b.id}`, { status: disabling ? 'resting' : 'active' });
+  ElMessage.success(disabling ? '已停用' : '已启用');
   load();
 }
 function onAvatarUploaded(res) { form.value.avatar_url = res.url; }

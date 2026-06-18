@@ -36,7 +36,15 @@ async function save() {
 }
 
 async function remove(row) {
-  await ElMessageBox.confirm(`确认删除「${row.name}」？`, '提示', { type: 'warning' });
+  try {
+    await ElMessageBox.confirm(
+      `确认删除门店「${row.name}」吗？该门店下的所有理发师也会一并删除，且不可恢复。`,
+      '删除门店',
+      { type: 'warning', confirmButtonText: '确认删除', cancelButtonText: '再想想' }
+    );
+  } catch {
+    return; // 用户取消
+  }
   await request.delete(`/stores/${row.id}`);
   ElMessage.success('已删除');
   load();

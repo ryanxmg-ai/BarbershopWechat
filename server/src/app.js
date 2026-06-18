@@ -11,7 +11,7 @@ function createApp() {
   app.get('/api/health', (req, res) => res.json({ ok: true }));
 
   // 路由在后续任务中挂载（创建对应文件后逐行解开注释）
-  // app.use('/api/auth', require('./routes/auth'));
+  app.use('/api/auth', require('./routes/auth'));
   app.use('/api/stores', require('./routes/stores'));
   app.use('/api/barbers', require('./routes/barbers'));
   app.use('/api/services', require('./routes/services'));

@@ -1,1 +1,40 @@
-<view>理发师详情</view>
+<view wx:if="{{barber}}" class="wrap">
+  <view class="header card">
+    <image class="avatar" src="{{barber.avatar_url || '/images/placeholder-avatar.png'}}" mode="aspectFill" />
+    <view class="h-info">
+      <view class="name">{{barber.name}}</view>
+      <view class="muted">{{barber.title}}</view>
+      <view class="rate">★ {{barber.rating}}（{{barber.review_count}}条评价）· 从业{{barber.years_experience}}年</view>
+    </view>
+  </view>
+
+  <view class="block card">
+    <view class="block-title">服务项目</view>
+    <view class="svc-row {{selServiceId === item.id ? 'svc-active' : ''}}"
+          wx:for="{{services}}" wx:key="id" data-id="{{item.id}}" bindtap="pickService">
+      <text>{{item.name}}</text>
+      <text class="price">¥{{item.price}}</text>
+    </view>
+  </view>
+
+  <view class="block card">
+    <view class="block-title">选择预约时间</view>
+    <scroll-view scroll-x class="date-tabs">
+      <view class="date-tab {{activeDate === item.iso ? 'date-active' : ''}}"
+            wx:for="{{dates}}" wx:key="iso" data-iso="{{item.iso}}" bindtap="pickDate">
+        <view>{{item.label}}</view><view class="md">{{item.md}}</view>
+      </view>
+    </scroll-view>
+    <view class="slot-grid">
+      <view class="slot {{!item.available ? 'slot-disabled' : ''}} {{selTime === item.time ? 'slot-active' : ''}}"
+            wx:for="{{slots}}" wx:key="time" data-time="{{item.time}}" data-avail="{{item.available}}" bindtap="pickTime">
+        {{item.time}}
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <view class="sel-info">已选：{{activeDate}} {{selTime || '--:--'}}</view>
+    <view class="btn-gold" bindtap="next">下一步</view>
+  </view>
+</view>

@@ -1,0 +1,11 @@
+.wrap { padding: 24rpx 24rpx 180rpx; display: flex; flex-direction: column; gap: 20rpx; }
+.block { padding: 24rpx; }
+.block-title { font-weight: 600; color: #1f3026; margin-bottom: 16rpx; }
+.kv { display: flex; justify-content: space-between; align-items: center; padding: 16rpx 0; border-bottom: 1rpx solid #f2f2f2; }
+.kv .k { color: #8a958e; }
+.ipt { text-align: right; flex: 1; margin-left: 20rpx; }
+.pay { padding: 22rpx 16rpx; border: 1rpx solid #eee; border-radius: 12rpx; margin-bottom: 12rpx; }
+.pay-active { border-color: #c9a96a; background: #faf6ee; color: #1f3026; font-weight: 600; }
+.footer { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; padding: 20rpx 24rpx; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 -2rpx 12rpx rgba(0,0,0,.06); }
+.amount { color: #c9a96a; font-size: 32rpx; font-weight: 700; }
+.footer .btn-gold { width: 320rpx; }

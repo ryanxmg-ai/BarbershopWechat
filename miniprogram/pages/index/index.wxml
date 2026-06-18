@@ -1,1 +1,26 @@
-<view>首页</view>
+<view class="hero">
+  <view class="brand">RYAN</view>
+  <view class="brand-sub">男士理发馆</view>
+  <view class="slogan">专注男士美发 · 型格东方</view>
+  <view class="since">SINCE 2015 · SHANGHAI</view>
+  <view class="btn-gold book-btn" bindtap="goStores">立即预约</view>
+</view>
+
+<view class="quick">
+  <view class="quick-item" bindtap="goStores"><view class="q-ic">🏬</view><text>找门店</text></view>
+  <view class="quick-item" bindtap="goStores"><view class="q-ic">✂️</view><text>选理发师</text></view>
+  <view class="quick-item" bindtap="goMy"><view class="q-ic">📅</view><text>我的预约</text></view>
+  <view class="quick-item"><view class="q-ic">💳</view><text>会员中心</text></view>
+</view>
+
+<view class="section-head">
+  <text>连锁门店 · 上海</text>
+  <text class="more" bindtap="goStores">查看更多 ›</text>
+</view>
+<view class="store-grid">
+  <view class="store-cell card" wx:for="{{stores}}" wx:key="id" data-id="{{item.id}}" bindtap="goStore">
+    <image class="store-img" src="{{item.images[0] || '/images/placeholder-store.png'}}" mode="aspectFill" />
+    <view class="store-name">{{item.name}}</view>
+    <view class="muted">{{item.address}}</view>
+  </view>
+</view>

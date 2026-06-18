@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ElMessage } from 'element-plus';
 import router from '../router';
 
-const request = axios.create({ baseURL: import.meta.env.VITE_API_BASE });
+const request = axios.create({ baseURL: import.meta.env.VITE_API_BASE, timeout: 20000 });
 
 request.interceptors.request.use((config) => {
   const token = localStorage.getItem('admin_token');

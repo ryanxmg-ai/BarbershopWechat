@@ -9,50 +9,50 @@ router.get('/', requireAdmin, async (req, res, next) => {
   try {
     const today = new Date();
     const todayStr = dateStr(today);
+    const weekStart = new Date(today); weekStart.setDate(today.getDate() - 6);
+    const weekStartStr = dateStr(weekStart);
+    const monthStartStr = dateStr(new Date(today.getFullYear(), today.getMonth(), 1));
 
-    const [stores, barbers] = await Promise.all([
+    // 所有相互独立的查询并发执行（避免逐天串行造成的高延迟）
+    const [storesRes, barbersRes, weekRes, monthRes, recentRes] = await Promise.all([
       supabase.from('stores').select('id', { count: 'exact', head: true }),
       supabase.from('barbers').select('id', { count: 'exact', head: true }),
+      // 近 7 天非取消预约，一次取回后在内存聚合（覆盖 trend / weekCount / todayCount）
+      supabase.from('appointments').select('appointment_date')
+        .gte('appointment_date', weekStartStr).lte('appointment_date', todayStr)
+        .neq('status', 'cancelled'),
+      // 本月已确认 + 已完成的金额（营业额）
+      supabase.from('appointments').select('amount')
+        .gte('appointment_date', monthStartStr).in('status', ['confirmed', 'completed']),
+      // 近期动态
+      supabase.from('appointments')
+        .select('order_no, user_phone, status, created_at, store:stores(name), barber:barbers(name)')
+        .order('created_at', { ascending: false }).limit(6),
     ]);
 
-    // 今日预约数
-    const { count: todayCount } = await supabase.from('appointments')
-      .select('id', { count: 'exact', head: true })
-      .eq('appointment_date', todayStr).neq('status', 'cancelled');
-
-    // 近 7 天趋势
-    const trend = [];
-    let weekCount = 0;
+    // 近 7 天趋势：先建零值桶，保证每天都有点
+    const counts = {};
     for (let i = 6; i >= 0; i--) {
       const d = new Date(today); d.setDate(today.getDate() - i);
-      const ds = dateStr(d);
-      const { count } = await supabase.from('appointments')
-        .select('id', { count: 'exact', head: true })
-        .eq('appointment_date', ds).neq('status', 'cancelled');
-      trend.push({ date: ds.slice(5), count: count || 0 });
-      weekCount += count || 0;
+      counts[dateStr(d)] = 0;
     }
+    (weekRes.data || []).forEach((a) => {
+      if (counts[a.appointment_date] !== undefined) counts[a.appointment_date] += 1;
+    });
+    const trend = Object.keys(counts).map((ds) => ({ date: ds.slice(5), count: counts[ds] }));
+    const weekCount = Object.values(counts).reduce((s, c) => s + c, 0);
+    const todayCount = counts[todayStr] || 0;
 
-    // 本月营业额（已完成 + 已确认）
-    const monthStart = dateStr(new Date(today.getFullYear(), today.getMonth(), 1));
-    const { data: monthAppts } = await supabase.from('appointments')
-      .select('amount').gte('appointment_date', monthStart)
-      .in('status', ['confirmed', 'completed']);
-    const monthRevenue = (monthAppts || []).reduce((s, a) => s + Number(a.amount), 0);
-
-    // 近期动态
-    const { data: recent } = await supabase.from('appointments')
-      .select('order_no, user_phone, status, created_at, store:stores(name), barber:barbers(name)')
-      .order('created_at', { ascending: false }).limit(6);
+    const monthRevenue = (monthRes.data || []).reduce((s, a) => s + Number(a.amount), 0);
 
     res.json({
-      storeCount: stores.count || 0,
-      barberCount: barbers.count || 0,
-      todayCount: todayCount || 0,
+      storeCount: storesRes.count || 0,
+      barberCount: barbersRes.count || 0,
+      todayCount,
       weekCount,
       monthRevenue,
       trend,
-      recent: recent || [],
+      recent: recentRes.data || [],
     });
   } catch (e) { next(e); }
 });

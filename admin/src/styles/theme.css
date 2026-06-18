@@ -1,0 +1,21 @@
+:root {
+  --ryan-dark: #1f3026;       /* 深绿 */
+  --ryan-dark-2: #16241c;
+  --ryan-gold: #c9a96a;       /* 金色 */
+  --ryan-gold-soft: #e3d4b0;
+  --el-color-primary: #1f3026;
+}
+body { margin: 0; font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: #f4f5f3; }
+
+/* 侧边导航深绿底 + 金色高亮 */
+.ryan-sider { background: var(--ryan-dark); }
+.ryan-sider .el-menu { background: transparent; border-right: none; }
+.ryan-sider .el-menu-item { color: #c8d2cb; }
+.ryan-sider .el-menu-item.is-active { color: var(--ryan-gold); background: var(--ryan-dark-2); }
+.ryan-sider .el-menu-item.is-active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--ryan-gold); }
+
+/* 统计卡 */
+.stat-card { border-radius: 10px; padding: 18px 20px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.stat-card .num { font-size: 28px; font-weight: 700; color: var(--ryan-dark); }
+.stat-card .label { color: #8a958e; font-size: 13px; }
+.page-title { font-size: 18px; font-weight: 600; color: var(--ryan-dark); }

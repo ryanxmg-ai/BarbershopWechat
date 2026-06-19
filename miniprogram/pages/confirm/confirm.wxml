@@ -1,6 +1,7 @@
 <view wx:if="{{order}}" class="wrap">
   <view class="block card">
     <view class="block-title">预约信息</view>
+    <view wx:if="{{order.storeName}}" class="kv"><text class="k">门店</text><text>{{order.storeName}}</text></view>
     <view class="kv"><text class="k">理发师</text><text>{{order.barberName}}（{{order.barberTitle}}）</text></view>
     <view class="kv"><text class="k">服务项目</text><text>{{order.serviceName}}　¥{{order.amount}}</text></view>
     <view class="kv"><text class="k">预约时间</text><text>{{order.date}} {{order.time}}</text></view>

@@ -8,6 +8,12 @@
 .appt-mid { display: flex; gap: 20rpx; align-items: center; padding: 20rpx 0; }
 .avatar { width: 90rpx; height: 90rpx; border-radius: 50%; }
 .b-name { font-weight: 600; color: #1f3026; }
-.appt-actions { display: flex; justify-content: flex-end; }
+.appt-store { padding-top: 12rpx; }
+.badge { font-size: 22rpx; padding: 2rpx 14rpx; border-radius: 6rpx; }
+.badge-pending { color: #c9a96a; background: #faf3e3; }
+.badge-confirmed { color: #2e7d32; background: #e8f5e9; }
+.badge-completed { color: #888; background: #eee; }
+.badge-cancelled { color: #999; background: #f0f0f0; }
+.appt-actions { display: flex; justify-content: flex-end; gap: 16rpx; flex-wrap: wrap; }
 .btn-outline { border: 1rpx solid #c9a96a; color: #c9a96a; border-radius: 999rpx; padding: 12rpx 32rpx; font-size: 26rpx; }
 .empty { text-align: center; color: #aaa; padding: 80rpx 0; }

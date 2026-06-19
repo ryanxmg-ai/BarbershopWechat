@@ -15,15 +15,27 @@ Page({
     else this.setData({ list: [] });
   },
   load() {
+    const labelMap = { pending: '待确认', confirmed: '待服务', completed: '已完成', cancelled: '已取消' };
     request(`/appointments?phone=${encodeURIComponent(this.data.phone)}`).then((all) => {
       const t = this.data.activeTab;
-      const list = all.filter((a) => {
-        if (t === 'upcoming') return ['pending', 'confirmed'].includes(a.status);
-        if (t === 'completed') return a.status === 'completed';
-        return a.status === 'cancelled';
-      });
+      const list = all
+        .filter((a) => {
+          if (t === 'upcoming') return ['pending', 'confirmed'].includes(a.status);
+          if (t === 'completed') return a.status === 'completed';
+          return a.status === 'cancelled';
+        })
+        .map((a) => ({ ...a, statusLabel: labelMap[a.status] || a.status }));
       this.setData({ list });
     });
+  },
+  voucher(e) {
+    const it = e.currentTarget.dataset.item;
+    const content = `订单号：${it.order_no}\n门店：${it.store.name}\n理发师：${it.barber.name}\n服务：${it.service.name}\n时间：${it.appointment_date} ${it.appointment_time}\n金额：¥${it.amount}`;
+    wx.showModal({ title: '预约凭证', content, showCancel: false });
+  },
+  modify(e) {
+    const it = e.currentTarget.dataset.item;
+    wx.navigateTo({ url: `/pages/barber/barber?id=${it.barber_id}` });
   },
   switchTab(e) { this.setData({ activeTab: e.currentTarget.dataset.key }, () => this.load()); },
   async cancel(e) {

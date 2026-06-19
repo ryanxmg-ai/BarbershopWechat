@@ -9,8 +9,9 @@
   <view class="appt card" wx:for="{{list}}" wx:key="id">
     <view class="appt-top">
       <text class="dt">{{item.appointment_date}} {{item.appointment_time}}</text>
-      <text class="muted">{{item.store.name}}</text>
+      <text class="badge badge-{{item.status}}">{{item.statusLabel}}</text>
     </view>
+    <view class="appt-store muted">{{item.store.name}}</view>
     <view class="appt-mid">
       <image class="avatar" src="{{item.barber.avatar_url || '/images/placeholder-avatar.png'}}" mode="aspectFill" />
       <view>
@@ -19,8 +20,18 @@
       </view>
     </view>
     <view class="appt-actions">
-      <view wx:if="{{activeTab === 'upcoming'}}" class="btn-outline" data-id="{{item.id}}" bindtap="cancel">取消预约</view>
-      <view wx:if="{{activeTab !== 'upcoming'}}" class="btn-outline" data-item="{{item}}" bindtap="rebook">再来一单</view>
+      <block wx:if="{{activeTab === 'upcoming'}}">
+        <view class="btn-outline" data-item="{{item}}" bindtap="voucher">查看凭证</view>
+        <view class="btn-outline" data-item="{{item}}" bindtap="modify">修改预约</view>
+        <view class="btn-outline" data-id="{{item.id}}" bindtap="cancel">取消预约</view>
+      </block>
+      <block wx:elif="{{activeTab === 'completed'}}">
+        <view class="btn-outline" data-item="{{item}}" bindtap="voucher">查看凭证</view>
+        <view class="btn-outline" data-item="{{item}}" bindtap="rebook">再来一单</view>
+      </block>
+      <block wx:else>
+        <view class="btn-outline" data-item="{{item}}" bindtap="rebook">再来一单</view>
+      </block>
     </view>
   </view>
   <view wx:if="{{phone && list.length === 0}}" class="empty">暂无预约</view>

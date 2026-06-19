@@ -18,9 +18,9 @@
     "selectedColor": "#c9a96a",
     "backgroundColor": "#ffffff",
     "list": [
-      { "pagePath": "pages/index/index", "text": "首页" },
-      { "pagePath": "pages/stores/stores", "text": "门店" },
-      { "pagePath": "pages/my/my", "text": "我的" }
+      { "pagePath": "pages/index/index", "text": "首页", "iconPath": "images/tab/home.png", "selectedIconPath": "images/tab/home-on.png" },
+      { "pagePath": "pages/stores/stores", "text": "门店", "iconPath": "images/tab/shop.png", "selectedIconPath": "images/tab/shop-on.png" },
+      { "pagePath": "pages/my/my", "text": "我的", "iconPath": "images/tab/mine.png", "selectedIconPath": "images/tab/mine-on.png" }
     ]
   },
   "style": "v2",

@@ -2,9 +2,16 @@
   <view class="header card">
     <image class="avatar" src="{{barber.avatar_url || '/images/placeholder-avatar.png'}}" mode="aspectFill" />
     <view class="h-info">
-      <view class="name">{{barber.name}}</view>
+      <view class="name-row">
+        <view class="name">{{barber.name}}</view>
+        <view class="follow-btn {{following ? 'follow-active' : ''}}" bindtap="toggleFollow">{{following ? '已关注' : '关注'}}</view>
+      </view>
       <view class="muted">{{barber.title}}</view>
       <view class="rate">★ {{barber.rating}}（{{barber.review_count}}条评价）· 从业{{barber.years_experience}}年</view>
+      <view wx:if="{{barber.specialties.length}}" class="spec-row">
+        <text class="spec-label">擅长：</text>
+        <text class="spec-chip" wx:for="{{barber.specialties}}" wx:key="*this">{{item}}</text>
+      </view>
     </view>
   </view>
 
@@ -12,7 +19,10 @@
     <view class="block-title">服务项目</view>
     <view class="svc-row {{selServiceId === item.id ? 'svc-active' : ''}}"
           wx:for="{{services}}" wx:key="id" data-id="{{item.id}}" bindtap="pickService">
-      <text>{{item.name}}</text>
+      <view class="svc-text">
+        <text class="svc-name">{{item.name}}</text>
+        <text wx:if="{{item.description}}" class="svc-desc">{{item.description}}</text>
+      </view>
       <text class="price">¥{{item.price}}</text>
     </view>
   </view>

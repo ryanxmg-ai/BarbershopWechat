@@ -18,6 +18,7 @@ Page({
   data: {
     barber: null, services: [], slots: [],
     dates: [], activeDate: '', selServiceId: '', selTime: '',
+    following: false,
   },
   onLoad(query) {
     this.barberId = query.id;
@@ -31,6 +32,11 @@ Page({
         selServiceId: this.data.selServiceId || (b.services[0] && b.services[0].id),
       });
     });
+  },
+  toggleFollow() {
+    const following = !this.data.following;
+    this.setData({ following });
+    wx.showToast({ title: following ? '已关注' : '已取消关注', icon: 'none' });
   },
   pickDate(e) { this.setData({ activeDate: e.currentTarget.dataset.iso, selTime: '' }, () => this.load()); },
   pickService(e) { this.setData({ selServiceId: e.currentTarget.dataset.id }); },
@@ -47,6 +53,7 @@ Page({
     const payload = {
       barberId: this.barberId,
       storeId: this.data.barber.store_id,
+      storeName: this.data.barber.store && this.data.barber.store.name,
       barberName: this.data.barber.name,
       barberTitle: this.data.barber.title,
       serviceId: svc.id, serviceName: svc.name, amount: svc.price,

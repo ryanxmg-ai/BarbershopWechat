@@ -1,13 +1,13 @@
 <view wx:if="{{barber}}" class="wrap">
-  <view class="header card">
+  <view class="header">
     <image class="avatar" src="{{barber.avatar_url || '/images/placeholder-avatar.png'}}" mode="aspectFill" />
     <view class="h-info">
       <view class="name-row">
         <view class="name">{{barber.name}}</view>
         <view class="follow-btn {{following ? 'follow-active' : ''}}" bindtap="toggleFollow">{{following ? '已关注' : '关注'}}</view>
       </view>
-      <view class="muted">{{barber.title}}</view>
-      <view class="rate">★ {{barber.rating}}（{{barber.review_count}}条评价）· 从业{{barber.years_experience}}年</view>
+      <view class="h-title">{{barber.title}}</view>
+      <view class="h-rate">★ {{barber.rating}}（{{barber.review_count}}条评价）· 从业{{barber.years_experience}}年</view>
       <view wx:if="{{barber.specialties.length}}" class="spec-row">
         <text class="spec-label">擅长：</text>
         <text class="spec-chip" wx:for="{{barber.specialties}}" wx:key="*this">{{item}}</text>

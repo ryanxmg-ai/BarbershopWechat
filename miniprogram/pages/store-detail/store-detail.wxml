@@ -1,5 +1,8 @@
 <view wx:if="{{store}}">
-  <image class="banner" src="{{store.images[0] || '/images/placeholder-store.png'}}" mode="aspectFill" />
+  <view class="banner-wrap">
+    <image class="banner" src="{{store.images[0] || '/images/placeholder-store.png'}}" mode="aspectFill" />
+    <view class="banner-mask"></view>
+  </view>
   <view class="info card">
     <view class="row-top">
       <text class="store-name">{{store.name}}</text>

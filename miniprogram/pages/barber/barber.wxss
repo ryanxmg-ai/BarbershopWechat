@@ -1,13 +1,17 @@
 .wrap { padding: 24rpx 24rpx 180rpx; display: flex; flex-direction: column; gap: 20rpx; }
-.header { display: flex; gap: 24rpx; padding: 28rpx; align-items: center; }
-.avatar { width: 140rpx; height: 140rpx; border-radius: 50%; }
+/* 深色影棚风头部，铺到屏幕两侧与顶部 */
+.header { display: flex; gap: 28rpx; align-items: center; margin: -24rpx -24rpx 0; padding: 56rpx 40rpx; background: linear-gradient(160deg, #243a2c, #14201a); }
+.avatar { width: 150rpx; height: 150rpx; border-radius: 50%; border: 3rpx solid #c9a96a; }
+.h-info { flex: 1; }
 .name-row { display: flex; align-items: center; justify-content: space-between; }
-.name { font-size: 36rpx; font-weight: 700; color: #1f3026; }
+.name { font-size: 38rpx; font-weight: 700; color: #f3ead6; }
+.h-title { font-size: 26rpx; color: #c9a96a; margin-top: 6rpx; letter-spacing: 2rpx; }
+.h-rate { font-size: 24rpx; color: #d3dcd6; margin-top: 8rpx; }
 .follow-btn { font-size: 24rpx; color: #c9a96a; border: 1rpx solid #c9a96a; border-radius: 999rpx; padding: 6rpx 24rpx; }
 .follow-active { background: #c9a96a; color: #1f3026; font-weight: 600; }
-.spec-row { margin-top: 12rpx; display: flex; flex-wrap: wrap; align-items: center; gap: 10rpx; }
-.spec-label { font-size: 24rpx; color: #8a958e; }
-.spec-chip { font-size: 22rpx; color: #c9a96a; border: 1rpx solid #c9a96a; border-radius: 6rpx; padding: 2rpx 12rpx; }
+.spec-row { margin-top: 14rpx; display: flex; flex-wrap: wrap; align-items: center; gap: 10rpx; }
+.spec-label { font-size: 24rpx; color: #9aa79f; }
+.spec-chip { font-size: 22rpx; color: #e3d4b0; border: 1rpx solid rgba(201,169,106,0.6); border-radius: 6rpx; padding: 2rpx 12rpx; }
 .block { padding: 24rpx; }
 .block-title { font-weight: 600; color: #1f3026; margin-bottom: 16rpx; }
 .svc-row { display: flex; justify-content: space-between; align-items: center; padding: 22rpx 16rpx; border-radius: 12rpx; border: 1rpx solid #eee; margin-bottom: 12rpx; }

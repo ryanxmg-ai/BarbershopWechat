@@ -1,4 +1,7 @@
-.banner { width: 100%; height: 360rpx; }
+.banner-wrap { position: relative; }
+.banner { width: 100%; height: 360rpx; display: block; }
+/* 顶部/底部深色渐变叠加，统一影棚质感并与下方信息卡过渡 */
+.banner-mask { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: linear-gradient(180deg, rgba(20,32,26,0.45) 0%, rgba(20,32,26,0) 35%, rgba(20,32,26,0.55) 100%); }
 .info { margin: -40rpx 24rpx 0; position: relative; padding: 24rpx; display: flex; flex-direction: column; gap: 10rpx; }
 .row-top { display: flex; align-items: center; gap: 12rpx; }
 .store-name { font-size: 34rpx; font-weight: 700; color: #1f3026; }

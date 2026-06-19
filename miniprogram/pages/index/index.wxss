@@ -1,4 +1,5 @@
 .hero { background: linear-gradient(160deg, #1f3026, #16241c); color: #fff; padding: 60rpx 40rpx 50rpx; }
+.city-indicator { font-size: 24rpx; color: #c8d2cb; margin-bottom: 16rpx; }
 .brand { font-size: 64rpx; font-weight: 800; letter-spacing: 6rpx; }
 .brand-sub { color: #c9a96a; letter-spacing: 10rpx; margin-top: 6rpx; }
 .slogan { margin-top: 24rpx; font-size: 26rpx; color: #c8d2cb; }

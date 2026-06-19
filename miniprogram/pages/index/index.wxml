@@ -1,4 +1,5 @@
 <view class="hero">
+  <view class="city-indicator">上海 ▾</view>
   <view class="brand">RYAN</view>
   <view class="brand-sub">男士理发馆</view>
   <view class="slogan">专注男士美发 · 型格东方</view>

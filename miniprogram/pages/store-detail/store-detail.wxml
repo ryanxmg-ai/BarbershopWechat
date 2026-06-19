@@ -8,6 +8,11 @@
     <view class="muted">{{store.address}}</view>
     <view class="muted">营业时间：{{store.business_hours}}　☎ {{store.phone}}</view>
     <view class="rate">★ {{store.rating}}（{{store.review_count}}条评价）</view>
+    <view class="action-row">
+      <view class="action-btn" bindtap="callStore"><text class="action-ic">📞</text><text>电话</text></view>
+      <view class="action-btn" bindtap="navStore"><text class="action-ic">🧭</text><text>导航</text></view>
+      <view class="action-btn {{collected ? 'action-active' : ''}}" bindtap="toggleCollect"><text class="action-ic">{{collected ? '★' : '☆'}}</text><text>{{collected ? '已收藏' : '收藏'}}</text></view>
+    </view>
   </view>
 
   <view class="section-title">理发师团队</view>

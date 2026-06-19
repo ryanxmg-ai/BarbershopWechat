@@ -24,8 +24,9 @@ router.get('/:id', async (req, res, next) => {
       .from('barbers').select('*').eq('id', req.params.id).single();
     if (error) { const err = new Error('理发师不存在'); err.status = 404; throw err; }
 
+    // 只返回已上架的服务供顾客预约
     const { data: services } = await supabase
-      .from('services').select('*').order('sort_order');
+      .from('services').select('*').eq('status', 'active').order('sort_order');
 
     const date = req.query.date;
     let slots = [];

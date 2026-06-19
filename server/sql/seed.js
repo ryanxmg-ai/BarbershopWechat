@@ -2,10 +2,10 @@ require('dotenv').config();
 const supabase = require('../src/supabase');
 
 const SERVICES = [
-  { name: '男士剪发(洗剪吹)', price: 128, duration: 45, sort_order: 1 },
-  { name: '造型设计(含造型)', price: 168, duration: 60, sort_order: 2 },
-  { name: '渐变·油头造型', price: 188, duration: 60, sort_order: 3 },
-  { name: '烫发(纹理·定位)', price: 298, duration: 90, sort_order: 4 },
+  { name: '男士剪发(洗剪吹)', category: '剪发造型', description: '专业洗剪吹，含基础造型与日常打理建议。', price: 128, duration: 45, status: 'active', sort_order: 1 },
+  { name: '造型设计(含造型)', category: '剪发造型', description: '进阶造型设计，结合脸型与气质量身打造。', price: 168, duration: 60, status: 'active', sort_order: 2 },
+  { name: '渐变·油头造型', category: '潮流造型', description: '渐变、油头等潮流发型，凸显型格质感。', price: 188, duration: 60, status: 'active', sort_order: 3 },
+  { name: '烫发(纹理·定位)', category: '烫染', description: '纹理烫/定位烫，塑造蓬松自然的立体造型。', price: 298, duration: 90, status: 'active', sort_order: 4 },
 ];
 
 const STORES = [

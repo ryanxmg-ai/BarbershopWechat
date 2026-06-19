@@ -33,8 +33,11 @@ create table if not exists barbers (
 create table if not exists services (
   id uuid primary key default gen_random_uuid(),
   name text not null,
+  category text not null default '基础服务',
+  description text,
   price numeric(10,2) not null,
   duration int not null default 30,
+  status text not null default 'active',        -- active=上架 | inactive=下架
   sort_order int not null default 0
 );
 

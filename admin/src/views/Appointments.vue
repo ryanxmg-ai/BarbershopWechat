@@ -57,6 +57,7 @@ async function cancelAppointment(row) {
 
 <template>
   <div>
+    <div class="total-bar">共 <b>{{ total }}</b> 条预约记录</div>
     <div class="filters">
       <el-select v-model="filters.store_id" placeholder="全部门店" clearable style="width:130px">
         <el-option v-for="s in stores" :key="s.id" :label="s.name" :value="s.id" />
@@ -81,6 +82,9 @@ async function cancelAppointment(row) {
       <el-table-column label="门店" width="100"><template #default="{ row }">{{ row.store?.name }}</template></el-table-column>
       <el-table-column label="理发师" width="100"><template #default="{ row }">{{ row.barber?.name }}</template></el-table-column>
       <el-table-column label="服务项目"><template #default="{ row }">{{ row.service?.name }}</template></el-table-column>
+      <el-table-column label="消费金额" width="100">
+        <template #default="{ row }"><span class="amount">¥{{ row.amount }}</span></template>
+      </el-table-column>
       <el-table-column label="状态" width="100">
         <template #default="{ row }">
           <el-tag :type="statusMeta[row.status]?.type">{{ statusMeta[row.status]?.text }}</el-tag>
@@ -104,5 +108,8 @@ async function cancelAppointment(row) {
 </template>
 
 <style scoped>
+.total-bar { margin-bottom: 12px; color: #555; font-size: 14px; }
+.total-bar b { color: #1f3026; font-size: 18px; margin: 0 2px; }
 .filters { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.amount { color: #c9a96a; font-weight: 600; }
 </style>

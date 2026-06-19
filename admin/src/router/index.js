@@ -10,6 +10,7 @@ const routes = [
       { path: 'dashboard', name: '数据总览', component: () => import('../views/Dashboard.vue') },
       { path: 'stores', name: '门店管理', component: () => import('../views/Stores.vue') },
       { path: 'barbers', name: '理发师管理', component: () => import('../views/Barbers.vue') },
+      { path: 'services', name: '服务项目管理', component: () => import('../views/Services.vue') },
       { path: 'appointments', name: '预约管理', component: () => import('../views/Appointments.vue') },
       { path: 'members', name: '会员管理', component: () => import('../views/Placeholder.vue') },
       { path: 'marketing', name: '营销管理', component: () => import('../views/Placeholder.vue') },

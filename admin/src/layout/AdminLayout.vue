@@ -10,6 +10,7 @@ const menus = [
   { path: '/dashboard', label: '数据总览', icon: 'DataLine' },
   { path: '/stores', label: '门店管理', icon: 'Shop' },
   { path: '/barbers', label: '理发师管理', icon: 'User' },
+  { path: '/services', label: '服务项目管理', icon: 'Scissor' },
   { path: '/appointments', label: '预约管理', icon: 'Calendar' },
   { path: '/members', label: '会员管理', icon: 'Avatar' },
   { path: '/marketing', label: '营销管理', icon: 'Promotion' },

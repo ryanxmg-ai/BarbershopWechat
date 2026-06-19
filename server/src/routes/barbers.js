@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const { data: barber, error } = await supabase
-      .from('barbers').select('*').eq('id', req.params.id).single();
+      .from('barbers').select('*, store:stores(id, name, address)').eq('id', req.params.id).single();
     if (error) { const err = new Error('理发师不存在'); err.status = 404; throw err; }
 
     // 只返回已上架的服务供顾客预约

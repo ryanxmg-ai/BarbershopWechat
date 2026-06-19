@@ -5,6 +5,8 @@
 .store-row { display: flex; padding: 20rpx; gap: 20rpx; }
 .thumb { width: 160rpx; height: 160rpx; border-radius: 12rpx; flex-shrink: 0; }
 .row-info { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-.row-top { display: flex; align-items: center; gap: 12rpx; }
+.row-top { display: flex; align-items: center; justify-content: space-between; gap: 12rpx; }
+.row-top-right { display: flex; align-items: center; gap: 10rpx; }
+.dist { font-size: 22rpx; }
 .store-name { font-size: 30rpx; font-weight: 600; color: #1f3026; }
 .row-bottom { display: flex; gap: 16rpx; align-items: center; }

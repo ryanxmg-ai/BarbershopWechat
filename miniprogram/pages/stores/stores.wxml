@@ -9,7 +9,10 @@
     <view class="row-info">
       <view class="row-top">
         <text class="store-name">{{item.name}}</text>
-        <text class="{{item.status === 'open' ? 'tag-open' : 'tag-closed'}}">{{item.status === 'open' ? '营业中' : '休息中'}}</text>
+        <view class="row-top-right">
+          <text class="dist muted">{{item.distance}}</text>
+          <text class="{{item.status === 'open' ? 'tag-open' : 'tag-closed'}}">{{item.status === 'open' ? '营业中' : '休息中'}}</text>
+        </view>
       </view>
       <view class="muted">{{item.address}}</view>
       <view class="row-bottom">

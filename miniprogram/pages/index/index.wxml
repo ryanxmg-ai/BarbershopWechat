@@ -1,10 +1,16 @@
 <view class="hero">
-  <view class="city-indicator">上海 ▾</view>
-  <view class="brand">RYAN</view>
-  <view class="brand-sub">男士理发馆</view>
-  <view class="slogan">专注男士美发 · 型格东方</view>
-  <view class="since">SINCE 2015 · SHANGHAI</view>
-  <view class="btn-gold book-btn" bindtap="goStores">立即预约</view>
+  <!-- 右侧模特图：放置 miniprogram/images/hero.jpg 即生效；缺失时显示占位 -->
+  <image wx:if="{{!heroError}}" class="hero-photo" src="/images/hero.jpg" mode="aspectFill" binderror="onHeroError" />
+  <view wx:else class="hero-photo-ph">✂</view>
+  <view class="hero-mask"></view>
+  <view class="hero-content">
+    <view class="city-indicator">上海 ▾</view>
+    <view class="brand">RYAN</view>
+    <view class="brand-sub">男士理发馆</view>
+    <view class="slogan">专注男士发型 · 型格东方</view>
+    <view class="since">SINCE 2015 · SHANGHAI</view>
+    <view class="btn-gold book-btn" bindtap="goStores">立即预约</view>
+  </view>
 </view>
 
 <view class="quick">

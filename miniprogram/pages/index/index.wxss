@@ -1,10 +1,17 @@
-.hero { background: linear-gradient(160deg, #1f3026, #16241c); color: #fff; padding: 60rpx 40rpx 50rpx; }
-.city-indicator { font-size: 24rpx; color: #c8d2cb; margin-bottom: 16rpx; }
-.brand { font-size: 64rpx; font-weight: 800; letter-spacing: 6rpx; }
-.brand-sub { color: #c9a96a; letter-spacing: 10rpx; margin-top: 6rpx; }
-.slogan { margin-top: 24rpx; font-size: 26rpx; color: #c8d2cb; }
-.since { font-size: 20rpx; color: #8a958e; margin-top: 8rpx; }
-.book-btn { margin-top: 36rpx; }
+.hero { position: relative; overflow: hidden; min-height: 440rpx; background: linear-gradient(160deg, #243a2c, #14201a); color: #fff; }
+/* 右侧模特图，铺到右边缘 */
+.hero-photo { position: absolute; top: 0; right: 0; width: 62%; height: 100%; }
+/* 缺图占位：右侧大号剪刀剪影 */
+.hero-photo-ph { position: absolute; right: 40rpx; top: 50%; transform: translateY(-50%); font-size: 230rpx; line-height: 1; color: rgba(201,169,106,0.16); }
+/* 左深右透的遮罩，保证左侧文字可读、右侧露出照片 */
+.hero-mask { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(90deg, #14201a 30%, rgba(20,32,26,0.82) 50%, rgba(20,32,26,0.1) 100%); }
+.hero-content { position: relative; z-index: 2; padding: 56rpx 40rpx 56rpx; }
+.city-indicator { font-size: 24rpx; color: #c8d2cb; margin-bottom: 22rpx; }
+.brand { font-family: Georgia, "Times New Roman", serif; font-size: 76rpx; font-weight: 700; letter-spacing: 8rpx; color: #f3ead6; }
+.brand-sub { color: #c9a96a; letter-spacing: 12rpx; margin-top: 8rpx; font-size: 30rpx; }
+.slogan { margin-top: 26rpx; font-size: 26rpx; color: #d3dcd6; }
+.since { font-size: 20rpx; color: #9aa79f; margin-top: 8rpx; letter-spacing: 2rpx; }
+.book-btn { margin-top: 40rpx; width: 300rpx; }
 .quick { display: flex; justify-content: space-around; background: #fff; padding: 30rpx 0; margin: -30rpx 24rpx 0; border-radius: 16rpx; position: relative; box-shadow: 0 2rpx 12rpx rgba(0,0,0,.05); }
 .quick-item { display: flex; flex-direction: column; align-items: center; font-size: 24rpx; color: #555; }
 .q-ic { font-size: 44rpx; margin-bottom: 8rpx; }

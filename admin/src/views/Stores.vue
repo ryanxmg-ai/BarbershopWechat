@@ -8,6 +8,8 @@ const keyword = ref('');
 const dialogVisible = ref(false);
 const editing = ref(null);
 const form = ref({});
+const bizStart = ref('10:00');
+const bizEnd = ref('22:00');
 const API_BASE = import.meta.env.VITE_API_BASE;
 
 async function load() {
@@ -19,15 +21,22 @@ onMounted(load);
 function openCreate() {
   editing.value = null;
   form.value = { name: '', address: '', business_hours: '10:00-22:00', phone: '', images: [], status: 'open' };
+  bizStart.value = '10:00';
+  bizEnd.value = '22:00';
   dialogVisible.value = true;
 }
 function openEdit(row) {
   editing.value = row.id;
   form.value = { ...row, images: row.images || [] };
+  const [s, e] = (row.business_hours || '10:00-22:00').split('-');
+  bizStart.value = (s || '10:00').trim();
+  bizEnd.value = (e || '22:00').trim();
   dialogVisible.value = true;
 }
 
 async function save() {
+  if (!form.value.name) { ElMessage.warning('请填写门店名称'); return; }
+  form.value.business_hours = `${bizStart.value}-${bizEnd.value}`;
   if (editing.value) await request.put(`/stores/${editing.value}`, form.value);
   else await request.post('/stores', form.value);
   ElMessage.success('保存成功');
@@ -89,7 +98,11 @@ function removeImage(url) {
         <el-form-item label="门店名称"><el-input v-model="form.name" /></el-form-item>
         <el-form-item label="门店地址"><el-input v-model="form.address" type="textarea" :rows="2" /></el-form-item>
         <el-form-item label="联系电话"><el-input v-model="form.phone" /></el-form-item>
-        <el-form-item label="营业时间"><el-input v-model="form.business_hours" placeholder="10:00-22:00" /></el-form-item>
+        <el-form-item label="营业时间">
+          <el-time-select v-model="bizStart" start="08:00" end="23:30" step="00:30" placeholder="开始" style="width:130px" />
+          <span style="margin:0 8px;color:#8a958e">至</span>
+          <el-time-select v-model="bizEnd" start="08:00" end="23:30" step="00:30" placeholder="结束" style="width:130px" />
+        </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="form.status">
             <el-radio value="open">营业中</el-radio>

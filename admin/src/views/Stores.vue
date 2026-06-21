@@ -1,7 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
 import request from '../api/request';
+
+// 上传组件的鉴权头：必须在 script 里读 localStorage（模板中不能直接访问全局对象）
+const uploadHeaders = computed(() => ({ Authorization: `Bearer ${localStorage.getItem('admin_token')}` }));
 
 const list = ref([]);
 const keyword = ref('');
@@ -116,7 +119,7 @@ function removeImage(url) {
             </div>
             <el-upload
               :action="`${API_BASE}/upload?bucket=store-images`"
-              :headers="{ Authorization: `Bearer ${localStorage.getItem('admin_token')}` }"
+              :headers="uploadHeaders"
               name="file" :show-file-list="false" :on-success="onImageUploaded" accept="image/*">
               <div class="upload-box">+ 上传图片</div>
             </el-upload>

@@ -13,6 +13,8 @@ const editing = ref(null);
 const form = ref({});
 const API_BASE = import.meta.env.VITE_API_BASE;
 const SPECIALTIES = ['男士剪发', '造型设计', '油头', '渐变', '纹理烫', '染发', '胡须修剪', '经典背头'];
+// 上传组件鉴权头：在 script 里读 localStorage（模板不能直接访问全局对象）
+const uploadHeaders = computed(() => ({ Authorization: `Bearer ${localStorage.getItem('admin_token')}` }));
 
 async function load() {
   all.value = await request.get('/barbers');
@@ -106,7 +108,7 @@ function onAvatarUploaded(res) { form.value.avatar_url = res.url; }
         <el-form-item label="头像">
           <el-upload
             :action="`${API_BASE}/upload?bucket=avatars`"
-            :headers="{ Authorization: `Bearer ${localStorage.getItem('admin_token')}` }"
+            :headers="uploadHeaders"
             name="file" :show-file-list="false" :on-success="onAvatarUploaded" accept="image/*">
             <el-avatar :size="80" :src="form.avatar_url" shape="square">+</el-avatar>
           </el-upload>

@@ -6,6 +6,14 @@
 
 ---
 
+## 📸 界面预览
+
+| 微信小程序（顾客端） | 管理后台（商家端） |
+| :---: | :---: |
+| ![微信小程序前端](docs/screenshots/miniprogram.png) | ![商家管理后台系统](docs/screenshots/admin-dashboard.png) |
+
+---
+
 ## ✨ 功能特性
 
 ### 顾客端（微信小程序）

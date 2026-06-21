@@ -3,41 +3,48 @@ const supabase = require('../supabase');
 const { requireAdmin } = require('../middleware/auth');
 const router = express.Router();
 
-function dateStr(d) { return d.toISOString().slice(0, 10); }
+const TZ_OFFSET_MS = 8 * 3600 * 1000; // 东八区（北京时间），与时区无关地计算“日期”
+
+// 取某时刻在北京时间下的日期字符串 YYYY-MM-DD
+function beijingDate(d) {
+  return new Date(d.getTime() + TZ_OFFSET_MS).toISOString().slice(0, 10);
+}
 
 router.get('/', requireAdmin, async (req, res, next) => {
   try {
-    const today = new Date();
-    const todayStr = dateStr(today);
-    const weekStart = new Date(today); weekStart.setDate(today.getDate() - 6);
-    const weekStartStr = dateStr(weekStart);
-    const monthStartStr = dateStr(new Date(today.getFullYear(), today.getMonth(), 1));
+    const now = new Date();
+    const todayStr = beijingDate(now);
+    // 北京时间今天 00:00 对应的 UTC 时刻
+    const todayMidnight = new Date(`${todayStr}T00:00:00+08:00`);
+    const weekStart = new Date(todayMidnight.getTime() - 6 * 86400000); // 近 7 天起点（含今天）
+    const weekStartISO = weekStart.toISOString();
+    const monthStartStr = todayStr.slice(0, 7) + '-01';
+    const monthStartISO = new Date(`${monthStartStr}T00:00:00+08:00`).toISOString();
 
-    // 所有相互独立的查询并发执行（避免逐天串行造成的高延迟）
+    // 今日预约 / 本周预约 / 趋势 全部按【下单时间 created_at】统计，下单即时反映
     const [storesRes, barbersRes, weekRes, monthRes, recentRes] = await Promise.all([
       supabase.from('stores').select('id', { count: 'exact', head: true }),
       supabase.from('barbers').select('id', { count: 'exact', head: true }),
-      // 近 7 天非取消预约，一次取回后在内存聚合（覆盖 trend / weekCount / todayCount）
-      supabase.from('appointments').select('appointment_date')
-        .gte('appointment_date', weekStartStr).lte('appointment_date', todayStr)
-        .neq('status', 'cancelled'),
-      // 本月已确认 + 已完成的金额（营业额）
+      // 近 7 天内下单的非取消预约，一次取回在内存按北京日期聚合
+      supabase.from('appointments').select('created_at')
+        .gte('created_at', weekStartISO).neq('status', 'cancelled'),
+      // 本月下单且已确认/已完成的金额（营业额）
       supabase.from('appointments').select('amount')
-        .gte('appointment_date', monthStartStr).in('status', ['confirmed', 'completed']),
+        .gte('created_at', monthStartISO).in('status', ['confirmed', 'completed']),
       // 近期动态
       supabase.from('appointments')
         .select('order_no, user_phone, status, created_at, store:stores(name), barber:barbers(name)')
         .order('created_at', { ascending: false }).limit(6),
     ]);
 
-    // 近 7 天趋势：先建零值桶，保证每天都有点
+    // 近 7 天趋势：建零值桶（北京日期），保证每天有点
     const counts = {};
     for (let i = 6; i >= 0; i--) {
-      const d = new Date(today); d.setDate(today.getDate() - i);
-      counts[dateStr(d)] = 0;
+      counts[beijingDate(new Date(todayMidnight.getTime() - i * 86400000))] = 0;
     }
     (weekRes.data || []).forEach((a) => {
-      if (counts[a.appointment_date] !== undefined) counts[a.appointment_date] += 1;
+      const key = beijingDate(new Date(a.created_at));
+      if (counts[key] !== undefined) counts[key] += 1;
     });
     const trend = Object.keys(counts).map((ds) => ({ date: ds.slice(5), count: counts[ds] }));
     const weekCount = Object.values(counts).reduce((s, c) => s + c, 0);

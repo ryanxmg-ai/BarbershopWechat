@@ -18,6 +18,15 @@ const statusMeta = {
   cancelled: { text: '已取消', type: 'danger' },
 };
 
+// UTC 时间戳 -> 本地「YYYY-MM-DD HH:mm:ss」
+function fmtTime(iso) {
+  if (!iso) return '';
+  const d = new Date(String(iso).replace(/\.(\d{3})\d*/, '.$1'));
+  if (isNaN(d.getTime())) return iso;
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
+
 async function load() {
   const q = new URLSearchParams({ page: page.value, pageSize: pageSize.value });
   Object.entries(filters.value).forEach(([k, v]) => { if (v) q.append(k, v); });
@@ -85,6 +94,9 @@ async function cancelAppointment(row) {
       <el-table-column label="消费金额" width="100">
         <template #default="{ row }"><span class="amount">¥{{ row.amount }}</span></template>
       </el-table-column>
+      <el-table-column label="下单时间" width="170">
+        <template #default="{ row }"><span class="muted-time">{{ fmtTime(row.created_at) }}</span></template>
+      </el-table-column>
       <el-table-column label="状态" width="100">
         <template #default="{ row }">
           <el-tag :type="statusMeta[row.status]?.type">{{ statusMeta[row.status]?.text }}</el-tag>
@@ -112,4 +124,5 @@ async function cancelAppointment(row) {
 .total-bar b { color: #1f3026; font-size: 18px; margin: 0 2px; }
 .filters { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
 .amount { color: #c9a96a; font-weight: 600; }
+.muted-time { color: #8a958e; font-size: 13px; }
 </style>

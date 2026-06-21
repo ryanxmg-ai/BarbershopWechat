@@ -6,6 +6,16 @@ const TABS = [
   { key: 'cancelled', label: '已取消' },
 ];
 
+// 把后端 UTC 时间戳格式化为本地「YYYY-MM-DD HH:mm:ss」
+function fmtTime(iso) {
+  if (!iso) return '';
+  const s = String(iso).replace(' ', 'T').replace(/\.(\d{3})\d*/, '.$1');
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return iso;
+  const p = (n) => (n < 10 ? '0' : '') + n;
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+}
+
 Page({
   data: { tabs: TABS, activeTab: 'upcoming', phone: '', list: [] },
   onShow() {
@@ -24,7 +34,7 @@ Page({
           if (t === 'completed') return a.status === 'completed';
           return a.status === 'cancelled';
         })
-        .map((a) => ({ ...a, statusLabel: labelMap[a.status] || a.status }));
+        .map((a) => ({ ...a, statusLabel: labelMap[a.status] || a.status, createdLabel: fmtTime(a.created_at) }));
       this.setData({ list });
     });
   },

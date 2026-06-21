@@ -6,6 +6,7 @@
 .appt-top { display: flex; justify-content: space-between; padding-bottom: 16rpx; border-bottom: 1rpx solid #f2f2f2; }
 .dt { font-weight: 600; color: #1f3026; }
 .appt-mid { display: flex; gap: 20rpx; align-items: center; padding: 20rpx 0; }
+.appt-created { padding: 4rpx 0 12rpx; border-top: 1rpx solid #f6f6f6; }
 .avatar { width: 90rpx; height: 90rpx; border-radius: 50%; }
 .b-name { font-weight: 600; color: #1f3026; }
 .appt-store { padding-top: 12rpx; }

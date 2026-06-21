@@ -19,6 +19,7 @@
         <view class="muted">{{item.service.name}}　¥{{item.amount}}</view>
       </view>
     </view>
+    <view class="appt-created muted">下单时间：{{item.createdLabel}}</view>
     <view class="appt-actions">
       <block wx:if="{{activeTab === 'upcoming'}}">
         <view class="btn-outline" data-item="{{item}}" bindtap="voucher">查看凭证</view>

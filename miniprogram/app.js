@@ -1,14 +1,22 @@
-// API 基址：本地联调用 dev，云端/真机体验用 prod
+// API 基址：开发版(开发者工具)连本地，体验版/正式版连云端
 const API_BASE = {
   dev: 'http://127.0.0.1:3000/api',
   prod: 'https://REPLACE_WITH_CLOUDRUN_DOMAIN/api',
 };
-// 切换环境：本地开发改成 'dev'，上云/真机改成 'prod'
-const ENV = 'prod';
+
+// 按小程序运行环境自动选择：develop=开发版, trial=体验版, release=正式版
+function resolveApiBase() {
+  try {
+    const { envVersion } = wx.getAccountInfoSync().miniProgram;
+    return envVersion === 'develop' ? API_BASE.dev : API_BASE.prod;
+  } catch (e) {
+    return API_BASE.prod;
+  }
+}
 
 App({
   globalData: {
-    apiBase: API_BASE[ENV],
+    apiBase: resolveApiBase(),
     phone: '',
   },
   onLaunch() {

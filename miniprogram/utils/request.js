@@ -14,8 +14,8 @@ function request(path, { method = 'GET', data } = {}) {
       fail: (err) => {
         // 连不上/超时时给出明确提示，而不是静默空白
         const msg = err && err.errMsg && err.errMsg.indexOf('timeout') >= 0
-          ? '连接后端超时，请确认后端已启动(localhost:3000)'
-          : '网络请求失败，请检查后端服务';
+          ? '连接服务器超时，请稍后重试'
+          : '网络请求失败，请检查网络连接';
         wx.showToast({ title: msg, icon: 'none', duration: 2500 });
         reject(err);
       },

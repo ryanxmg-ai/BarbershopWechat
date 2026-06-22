@@ -1,5 +1,5 @@
 # 微信云托管 / 通用 Node 容器
-FROM node:20-slim
+FROM node:22-slim
 
 WORKDIR /app
 

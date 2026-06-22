@@ -1,0 +1,15 @@
+# 根构建上下文：只保留 server/ 运行所需，排除其余以缩小镜像与上下文
+.git
+**/node_modules
+admin
+miniprogram
+docs
+*.png
+*.jpg
+*.jpeg
+**/*.log
+**/.env
+**/.DS_Store
+server/.jest-tmp
+server/tests
+server/scripts
